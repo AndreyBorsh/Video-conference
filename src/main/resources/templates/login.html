@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body {
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           height: 100vh;
+           margin: 0;
+           background-color: #f4f4f4;
+       }
+
+       .login-form {
+           background-color: #fff;
+           padding: 20px;
+           border-radius: 8px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           width: 300px;
+           text-align: center;
+       }
+
+       .login-form label {
+           display: block;
+           margin-bottom: 8px;
+       }
+
+       .login-form input {
+           width: 100%;
+           padding: 8px;
+           margin-bottom: 16px;
+           box-sizing: border-box;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+       }
+
+       .login-form button {
+           background-color: #4caf50;
+           color: #fff;
+           padding: 10px;
+           border: none;
+           border-radius: 4px;
+           cursor: pointer;
+           width: 100%;
+       }
+
+       .login-form a {
+       color: #4caf50;
+       text-decoration: none;
+       }
+
+       .login-form a:hover {
+           text-decoration: underline;
+       }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Вход</h2>
+        <form action="your_login_endpoint" method="post">
+            <label for="email">Электронная почта:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Войти</button>
+
+            <p>Нет аккаунта? <a href="register.html">Зарегистрируйтесь</a></p>
+        </form>
+    </div>
+</body>
+</html>
