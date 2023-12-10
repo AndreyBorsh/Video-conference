@@ -1,13 +1,16 @@
 package com.example.unidubnameet.controllers;
 
+import com.example.unidubnameet.models.Users;
+import com.example.unidubnameet.repo.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
-
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("title", "Страница регистрации");
@@ -17,5 +20,22 @@ public class MainController {
     public String login(Model model) {
         model.addAttribute("title", "Страница входа");
         return "login";
+    }
+
+    @Autowired
+    private UsersRepository usersRepository;
+    @GetMapping("/")
+    public String main(Model model) {
+        Iterable<Users> users = usersRepository.findAll();
+        model.addAttribute("users", users);
+        return "main";
+    }
+
+    @PostMapping("/register")
+    public String registerUserAdd(@RequestParam String email, @RequestParam String firstName,
+                                  @RequestParam String lastName, @RequestParam String password, Model model) {
+        Users user = new Users(email, firstName, lastName);
+        usersRepository.save(user);
+        return "redirect:/login";
     }
 }
