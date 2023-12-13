@@ -1,15 +1,241 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Главная страница</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    </head>
-    <body>
-        <div th:each="el : ${users}">
-            <h3 th:text="${el.email}"></h3>
-            <p th:text="${el.first_name}"></p>
-            <p th:text="${el.last_name}"></p>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left-section {
+            padding: 20px;
+            text-align: center;
+            margin-right: auto;
+        }
+
+        .left-section button, .left-section input {
+            width: 200px;
+            margin: 10px;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        .left-section input {
+            flex-grow: 1;
+            max-width: 150px;
+        }
+
+        .left-section button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+
+        .left-section button:hover {
+            background-color: #45a049;
+        }
+
+        .right-section {
+            flex: 0.2;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            text-align: center;
+            overflow-y: auto;
+            height: 80vh;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .room-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .room-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Оверлей стилей */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .overlay-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .overlay-content label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .overlay-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .overlay-content button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .overlay-content button:hover {
+            background-color: #45a049;
+        }
+
+        .overlay-content button.cancel {
+            background-color: #ccc;
+            margin-top: 10px;
+        }
+
+        @media only screen and (min-width: 600px) {
+            header {
+                padding: 30px;
+            }
+
+            main {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MeetUni-Dubna</h1>
+        <div>
+            <span style="margin-right: 20px;">email@gmail.com</span>
+            <span>Имя</span>
         </div>
-    </body>
+    </header>
+
+    <main>
+        <div class="left-section">
+            <button onclick="joinRoom()">Присоединиться</button>
+            <input class="join-room-input" type="text" placeholder="Код комнаты" maxlength="6" readonly>
+            <button onclick="openCreateOverlay()">Создать</button>
+        </div>
+
+        <div class="right-section">
+            <h2>Избранные комнаты</h2>
+            <ul>
+                <li>
+                    <button class="room-button" onclick="enterRoom('Комната 1')">Комната 1</button>
+                </li>
+                <li>
+                    <button class="room-button" onclick="enterRoom('Комната 2')">Комната 2</button>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Оверлей создания комнаты -->
+    <div id="createOverlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <label for="roomCode">Код комнаты:</label>
+            <input type="text" id="roomCode" value="123456" readonly>
+            <label for="roomName">Название комнаты:</label>
+            <input type="text" id="roomName" placeholder="Введите название" maxlength="50">
+            <button onclick="createRoom()">Создать комнату</button>
+            <button class="cancel" onclick="closeCreateOverlay()">Отмена</button>
+        </div>
+    </div>
+
+    <script>
+        function joinRoom() {
+            alert("Функция присоединения к комнате");
+        }
+
+        function openCreateOverlay() {
+            document.getElementById('createOverlay').style.display = 'flex';
+        }
+
+        function createRoom() {
+            alert("Создание комнаты с параметрами:\n" +
+                  "Код комнаты - " + document.getElementById('roomCode').value +
+                  ", Название комнаты - " + document.getElementById('roomName').value);
+            closeCreateOverlay();
+        }
+
+        function closeCreateOverlay() {
+            document.getElementById('createOverlay').style.display = 'none';
+        }
+
+        function enterRoom(roomName) {
+            alert("Вход в комнату: " + roomName);
+        }
+    </script>
+</body>
 </html>

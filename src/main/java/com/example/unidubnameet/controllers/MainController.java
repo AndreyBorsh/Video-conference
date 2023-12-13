@@ -21,6 +21,11 @@ public class MainController {
         model.addAttribute("title", "Страница входа");
         return "login";
     }
+    @GetMapping("/main")
+    public String mainPage(Model model) {
+        model.addAttribute("title", "MeetUni-Dubna");
+        return "main";
+    }
 
     @Autowired
     private UsersRepository usersRepository;
@@ -28,7 +33,7 @@ public class MainController {
     public String main(Model model) {
         Iterable<Users> users = usersRepository.findAll();
         model.addAttribute("users", users);
-        return "main";
+        return "mainTemp";
     }
 
     @PostMapping("/register")
