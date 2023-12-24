@@ -13,11 +13,13 @@ public class Users {
     private String email;
     private String first_name;
     private String last_name;
+    private String password_hash;
 
-    public Users(String email, String first_name, String last_name) {
+    public Users(String email, String first_name, String last_name, String password_hash) {
         this.email = email;
         this.first_name = first_name;
         this.last_name = last_name;
+        this.password_hash = password_hash;
     }
 
     public Users() {
@@ -53,5 +55,13 @@ public class Users {
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
+    }
+
+    public String getPassword() {
+        return password_hash;
+    }
+
+    public void setPassword(String password_hash) {
+        this.password_hash = password_hash;
     }
 }

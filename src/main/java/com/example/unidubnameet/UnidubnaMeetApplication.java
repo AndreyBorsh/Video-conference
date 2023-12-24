@@ -1,27 +1,24 @@
 package com.example.unidubnameet;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@SpringBootApplication
+@EnableAutoConfiguration
+@Configuration
+@ComponentScan
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 public class UnidubnaMeetApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UnidubnaMeetApplication.class, args);
-
-//		String url = "jdbc:mysql://localhost:3306/meetunidubna?serverTimezone=Europe/Minsk&useSSL=false";
-//		String username = "root";
-//		String password = "123456";
-//		System.out.println("Connecting...");
-//		try (Connection connection = DriverManager.getConnection(url, username, password)) {
-//			System.out.println("Connection successful!");
-//		} catch (SQLException e) {
-//			System.out.println("Connection failed!");
-//			e.printStackTrace();
-//		}
 	}
 
 }

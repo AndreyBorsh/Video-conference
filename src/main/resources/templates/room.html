@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetUni-Dubna</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(calc(33.33% - 20px), 1fr));
+            grid-gap: 10px;
+            overflow-x: auto;
+            padding: 10px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .bottom-section {
+            text-align: center;
+            display: flex;
+            justify-content: space-between; /* Изменено значение */
+            align-items: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        button {
+            width: 150px;
+            margin: 10px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        #exitButton {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .participants {
+            margin: 10px;
+        }
+
+        @media only screen and (min-width: 600px) {
+            header {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>MeetUni-Dubna</h1>
+        <div>
+            <span style="margin-right: 20px;">email@gmail.com</span>
+            <span>Имя</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="video-container">
+            <video id="localVideo" autoplay muted></video>
+        </div>
+        <div class="video-container">
+            <video id="remoteVideo1" autoplay></video>
+        </div>
+    </main>
+
+    <div class="bottom-section">
+        <button id="exitButton" onclick="exitConference()">Выйти</button>
+        <button onclick="toggleCamera()">Включить/выключить камеру</button>
+        <button onclick="toggleMicrophone()">Включить/выключить микрофон</button>
+        <span class="participants">Участники: 2</span>
+    </div>
+
+    <script>
+        function toggleCamera() {
+            alert("Включить/выключить камеру");
+        }
+
+        function toggleMicrophone() {
+            alert("Включить/выключить микрофон");
+        }
+
+        function exitConference() {
+            alert("Покинуть конференцию");
+        }
+    </script>
+</body>
+</html>
